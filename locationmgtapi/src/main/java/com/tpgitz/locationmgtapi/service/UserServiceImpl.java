@@ -9,6 +9,8 @@ import com.tpgitz.locationmgtapi.exception.ErrorModel;
 import com.tpgitz.locationmgtapi.model.UserModel;
 import com.tpgitz.locationmgtapi.repository.UserEntityRepository;
 import com.tpgitz.locationmgtapi.validation.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +21,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserEntityRepository entityRepository;
 
@@ -32,6 +34,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(UserModel userModel) throws BusinessException {
+        logger.debug("Enter method login");
+        //empty check email & password
+        List<ErrorModel> errorModelList = userValidator.validateRequest(userModel);
+
+        if(!CollectionUtils.isEmpty(errorModelList)) {
+            throw new BusinessException(errorModelList);
+        }
 
         boolean result = false;
 
@@ -44,10 +53,13 @@ public class UserServiceImpl implements UserService {
             errorModel.setMessage("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
 
             errorList.add(errorModel);
+            logger.warn("Invalid login attempt");
             throw new BusinessException(errorList);
         }else {
             result = true;
+            logger.info("ล็อคอินสำเร็จ");
         }
+        logger.debug("Exiting method login");
         return result;
     }
 
