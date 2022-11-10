@@ -38,10 +38,8 @@ public class UserController {
     public ResponseEntity<Long> register(@RequestBody UserModel userModel) throws BusinessException {
 
         Long result = userService.register(userModel);
-        ResponseEntity<Long> responseEntity = new ResponseEntity<>(result, HttpStatus.CREATED);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-
-        return responseEntity;
     }
 }
 
