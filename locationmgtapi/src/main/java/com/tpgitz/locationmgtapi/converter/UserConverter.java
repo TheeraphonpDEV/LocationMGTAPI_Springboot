@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter {
 
-    public UserEntity convertModelToEntity(UserModel userModel){
+    public UserEntity convertEntityToModel(UserModel userModel){
 
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userModel.getEmail());

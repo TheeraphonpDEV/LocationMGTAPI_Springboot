@@ -5,4 +5,5 @@ import com.tpgitz.locationmgtapi.model.UserModel;
 
 public interface UserService {
     public boolean login(UserModel userModel) throws BusinessException;
+    public long register(UserModel userModel) throws BusinessException;
 }

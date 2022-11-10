@@ -26,8 +26,17 @@ public class UserController {
         boolean result = userService.login(userModel);
         ResponseEntity<Boolean> responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
 
-
         return responseEntity;
 
     }
+    @PostMapping("/users/register")
+    public ResponseEntity<Long> register(@RequestBody UserModel userModel) throws BusinessException {
+
+        Long result = userService.register(userModel);
+        ResponseEntity<Long> responseEntity = new ResponseEntity<>(result, HttpStatus.CREATED);
+
+
+        return responseEntity;
+    }
 }
+
